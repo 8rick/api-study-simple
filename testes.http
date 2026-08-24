@@ -1,0 +1,23 @@
+### Buscar todos os produtos (Seu GET antigo)
+GET http://localhost:8080/produtos
+
+### Cadastrar um novo produto
+POST http://localhost:8080/produtos
+Content-Type: application/json
+
+{
+  "nome": "Monitor Ultrawide",
+  "preco": 1500.0
+}
+
+### Atualizar o preco e o nome do produto com ID 1
+PUT http://localhost:8080/produtos/1
+Content-Type: application/json
+
+{
+  "nome": "Notebook Gamer (Atualizado)",
+  "preco": 20000.0
+}
+
+### Deletar o produto com ID 2
+DELETE http://localhost:8080/produtos/2
