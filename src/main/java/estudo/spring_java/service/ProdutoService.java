@@ -5,9 +5,8 @@ import estudo.spring_java.infra.exception.ProdutoNaoEncontradoException;
 import estudo.spring_java.model.Produto;
 import estudo.spring_java.repository.ProdutoRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
-
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ProdutoService {
@@ -18,21 +17,20 @@ public class ProdutoService {
         this.repository = repository;
     }
 
-    public Page listarProdutos(Pageable paginacao) {
+    public Page<DadosDetalhamentoProduto> listarProdutos(Pageable paginacao) {
         return repository.findAll(paginacao)
                 .map(DadosDetalhamentoProduto::new);
     }
 
     public Produto salvar(Produto produto) {
         return repository.save(produto);
-
     }
 
     public Produto atualizar(Long id, Produto produtoAtualizado) {
         Produto produtoAntigo = repository.findById(id)
-                .orElseThrow(() -> new ProdutoNaoEncontradoException("Produto com ID " + id + " não foi encontrado!"));
+                .orElseThrow(() -> new ProdutoNaoEncontradoException(
+                        "Produto com ID " + id + " não foi encontrado!"));
 
-        produtoAntigo.setId(id);
         produtoAntigo.setNome(produtoAtualizado.getNome());
         produtoAntigo.setPreco(produtoAtualizado.getPreco());
 
@@ -41,10 +39,10 @@ public class ProdutoService {
 
     public void deletar(Long id) {
         if (!repository.existsById(id)) {
-            throw new ProdutoNaoEncontradoException("Produto com ID " + id + " não foi encontrado!");
+            throw new ProdutoNaoEncontradoException(
+                    "Produto com ID " + id + " não foi encontrado!");
         }
+
         repository.deleteById(id);
     }
-
-
 }
